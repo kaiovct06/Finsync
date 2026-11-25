@@ -9,21 +9,25 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as RegisterRouteImport } from './routes/register'
-import { Route as LoginRouteImport } from './routes/login'
-import { Route as AppRouteImport } from './routes/_app'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as AppRelatoriosRouteImport } from './routes/_app/relatorios'
-import { Route as AppReceitasRouteImport } from './routes/_app/receitas'
-import { Route as AppMetasRouteImport } from './routes/_app/metas'
-import { Route as AppDespesasRouteImport } from './routes/_app/despesas'
-import { Route as AppDashboardRouteImport } from './routes/_app/dashboard'
-import { Route as AppConfiguracoesRouteImport } from './routes/_app/configuracoes'
+import { Route as AppRouteImport } from './routes/_app'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as RegisterRouteImport } from './routes/register'
 import { Route as AppCategoriasRouteImport } from './routes/_app/categorias'
+import { Route as AppConfiguracoesRouteImport } from './routes/_app/configuracoes'
+import { Route as AppDashboardRouteImport } from './routes/_app/dashboard'
+import { Route as AppDespesasRouteImport } from './routes/_app/despesas'
+import { Route as AppMetasRouteImport } from './routes/_app/metas'
+import { Route as AppReceitasRouteImport } from './routes/_app/receitas'
+import { Route as AppRelatoriosRouteImport } from './routes/_app/relatorios'
 
-const RegisterRoute = RegisterRouteImport.update({
-  id: '/register',
-  path: '/register',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppRoute = AppRouteImport.update({
+  id: '/_app',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginRoute = LoginRouteImport.update({
@@ -31,38 +35,14 @@ const LoginRoute = LoginRouteImport.update({
   path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AppRoute = AppRouteImport.update({
-  id: '/_app',
+const RegisterRoute = RegisterRouteImport.update({
+  id: '/register',
+  path: '/register',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AppRelatoriosRoute = AppRelatoriosRouteImport.update({
-  id: '/relatorios',
-  path: '/relatorios',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppReceitasRoute = AppReceitasRouteImport.update({
-  id: '/receitas',
-  path: '/receitas',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppMetasRoute = AppMetasRouteImport.update({
-  id: '/metas',
-  path: '/metas',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppDespesasRoute = AppDespesasRouteImport.update({
-  id: '/despesas',
-  path: '/despesas',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppDashboardRoute = AppDashboardRouteImport.update({
-  id: '/dashboard',
-  path: '/dashboard',
+const AppCategoriasRoute = AppCategoriasRouteImport.update({
+  id: '/categorias',
+  path: '/categorias',
   getParentRoute: () => AppRoute,
 } as any)
 const AppConfiguracoesRoute = AppConfiguracoesRouteImport.update({
@@ -70,9 +50,29 @@ const AppConfiguracoesRoute = AppConfiguracoesRouteImport.update({
   path: '/configuracoes',
   getParentRoute: () => AppRoute,
 } as any)
-const AppCategoriasRoute = AppCategoriasRouteImport.update({
-  id: '/categorias',
-  path: '/categorias',
+const AppDashboardRoute = AppDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppDespesasRoute = AppDespesasRouteImport.update({
+  id: '/despesas',
+  path: '/despesas',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppMetasRoute = AppMetasRouteImport.update({
+  id: '/metas',
+  path: '/metas',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppReceitasRoute = AppReceitasRouteImport.update({
+  id: '/receitas',
+  path: '/receitas',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppRelatoriosRoute = AppRelatoriosRouteImport.update({
+  id: '/relatorios',
+  path: '/relatorios',
   getParentRoute: () => AppRoute,
 } as any)
 
@@ -163,18 +163,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/register': {
-      id: '/register'
-      path: '/register'
-      fullPath: '/register'
-      preLoaderRoute: typeof RegisterRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/login': {
-      id: '/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof LoginRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_app': {
@@ -184,46 +177,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_app/relatorios': {
-      id: '/_app/relatorios'
-      path: '/relatorios'
-      fullPath: '/relatorios'
-      preLoaderRoute: typeof AppRelatoriosRouteImport
-      parentRoute: typeof AppRoute
+    '/register': {
+      id: '/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof RegisterRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/_app/receitas': {
-      id: '/_app/receitas'
-      path: '/receitas'
-      fullPath: '/receitas'
-      preLoaderRoute: typeof AppReceitasRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/metas': {
-      id: '/_app/metas'
-      path: '/metas'
-      fullPath: '/metas'
-      preLoaderRoute: typeof AppMetasRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/despesas': {
-      id: '/_app/despesas'
-      path: '/despesas'
-      fullPath: '/despesas'
-      preLoaderRoute: typeof AppDespesasRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/dashboard': {
-      id: '/_app/dashboard'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof AppDashboardRouteImport
+    '/_app/categorias': {
+      id: '/_app/categorias'
+      path: '/categorias'
+      fullPath: '/categorias'
+      preLoaderRoute: typeof AppCategoriasRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/configuracoes': {
@@ -233,11 +205,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppConfiguracoesRouteImport
       parentRoute: typeof AppRoute
     }
-    '/_app/categorias': {
-      id: '/_app/categorias'
-      path: '/categorias'
-      fullPath: '/categorias'
-      preLoaderRoute: typeof AppCategoriasRouteImport
+    '/_app/dashboard': {
+      id: '/_app/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AppDashboardRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/despesas': {
+      id: '/_app/despesas'
+      path: '/despesas'
+      fullPath: '/despesas'
+      preLoaderRoute: typeof AppDespesasRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/metas': {
+      id: '/_app/metas'
+      path: '/metas'
+      fullPath: '/metas'
+      preLoaderRoute: typeof AppMetasRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/receitas': {
+      id: '/_app/receitas'
+      path: '/receitas'
+      fullPath: '/receitas'
+      preLoaderRoute: typeof AppReceitasRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/relatorios': {
+      id: '/_app/relatorios'
+      path: '/relatorios'
+      fullPath: '/relatorios'
+      preLoaderRoute: typeof AppRelatoriosRouteImport
       parentRoute: typeof AppRoute
     }
   }
